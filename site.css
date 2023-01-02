@@ -1,0 +1,79 @@
+/*
+======================================
+; Title: site.css 
+; Author: Professor Krasso
+; Date: 02 Jan 2023
+; Modified By: Chris Gorham
+; Description: This code styles the course landing page
+; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
+;=====================================
+*/
+
+body {
+    font-family: 'Oswald', Verdana, Arial, sans-serif;
+}
+
+#container {
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+#icon-mode:hover {
+    cursor: pointer;
+}
+
+#icon-text {
+    padding-left: 10px;
+}
+
+.pull-right {
+    float: right;
+}
+
+.assign-container {
+    padding: 10px;
+}
+
+.assign-content {
+    width: 600px;
+    margin: 3% auto 0;
+}
+
+.assign-results-text {
+    text-align: center;
+    font-size: 28px;
+}
+
+.app-header {
+    text-align: center;
+    font-weight: 400;
+}
+
+.return-home {
+    color: #4F3674;
+    text-decoration: none;
+}
+
+.return-home:hover {
+    background-color: #D6A800;
+    color: #4F3674;
+    text-decoration: underline;
+}
+
+.return-home:visited {
+    color: #3C275A;
+}
+
+.form {
+    display: inline-grid;
+    grid-template-columns: auto;
+}
+
+.form-field {
+    padding: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
