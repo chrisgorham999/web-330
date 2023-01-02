@@ -1,3 +1,14 @@
+/*
+======================================
+; Title: theme.js
+; Author: Professor Krasso
+; Date: 02 Jan 2023
+; Modified By: Chris Gorham
+; Description: This code houses code for the light & dark themes
+; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
+;=====================================
+*/
+
 // if local storage doesn't have a default, it sets it to light
 function setDefaultTheme()
 {
