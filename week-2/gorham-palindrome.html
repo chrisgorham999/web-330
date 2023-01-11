@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
 
         <meta charset="UTF-8">
         <title>WEB 330 - Enterprise JavaScript II</title>
@@ -32,10 +32,12 @@
         <!---The JavaScript source doe for the theme functions setDefaultTheme and setSelectedTheme-->
         <script src="../theme.js"></script>
 
-    </head>
+</head>
 
 
 <body class="light-theme">
+            <!-- Creates the icon and adds the onclick functionality for changing between themes-->
+            <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right" style="font-size: 28px;"><span id="icon-text"></span></i><br>
 
     <div id="assign-container">
 
@@ -61,14 +63,14 @@
             </div>
         </div>
 
-        <!-- return home-->
+        <!-- return home link !-->
         <div class="assign-content">
-                <a href="../index.html" class="return-home">Return</a>
+                <a href="../index.html">Return</a>
         </div>
                 
                 
 
-        <!--- ddd-->
+        <!-- Results Card-->
         <div class="assign-content">
             <div class="card">
                 <div class="card-title">Palindrome Results</div>
@@ -84,41 +86,80 @@
 
         <script>
 
-            document.getElementById("btnCheckPhrase").onclick = function() {
-                let txtPhrase = document.getElementById("txtPhrase").value;
-                let today = getTodaysDate();
-                let reversedPhrase = reverse(txtPhrase);
-                let len = getLength(txtPhrase);
-                let header = `<p style="padding-left:10px;">` + "Date: " + today + `<br>` + "Original Phrase: " + txtPhrase + `<br>` + "Reversed Phrase: " + reversedPhrase + `<br>` + "Phrase Length: " + len;
-                document.getElementById("assign-results-header").innerHTML = header;
+        // sets a default theme; this code needs to be first
+        setDefaultTheme();
+    
+        // the function which will toggle between the two different themes
+        function toggleMode(x) {
+          let colorTheme = document.body.classList; // establishes the variable that holds the body CSS class
+          let iconMode = x.classList; // gets the classes 
 
-                if (isPalindrome(txtPhrase) === true) {
+          // if the value shows light, update the preference in storage
+          if (colorTheme.value === "light-theme")
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "dark-theme");
+            localStorage.setItem("iconMode", "fa-toggle-on");
+            localStorage.setItem("iconText", "Dark Mode");
+          }
+        
+          else
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "light-theme");
+            localStorage.setItem("iconMode", "fa-toggle-off");
+            localStorage.setItem("iconText", "Light Mode");
+          }
+
+          // applies the updated theme selection
+          colorTheme.value = localStorage.getItem("mode");
+          iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+          document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
+        }
+
+        // creates the onclick functionality for the "check phrase" button
+        document.getElementById("btnCheckPhrase").onclick = function() {
+          // establishes the variables that the functions will populate
+          let txtPhrase = document.getElementById("txtPhrase").value;
+          let today = getTodaysDate();
+          let reversedPhrase = reverse(txtPhrase);
+          let len = getLength(txtPhrase);
+          // header contains HTML styling for the string that is printed
+          let header = `<p style="padding-left:10px;">` + "Date: " + today + `<br>` + "Original Phrase: " + txtPhrase + `<br>` + "Reversed Phrase: " + reversedPhrase + `<br>` + "Phrase Length: " + len;
+          // prints header string to the appropriate spot
+          document.getElementById("assign-results-header").innerHTML = header;
+                // the if/else if code to print whether or not the input is a palindrome (or not) - is changed to lowercase prior to comparing
+                if (isPalindrome(txtPhrase.toLowerCase()) === true) {
                     document.getElementById("assign-results").innerHTML = txtPhrase + " <b><u>is</u></b> a palindrome!";
-                } else if (isPalindrome(txtPhrase) === false) {
+                } else if (isPalindrome(txtPhrase.toLowerCase()) === false) {
                     document.getElementById("assign-results").innerHTML = txtPhrase + " <b><u>is not</b></u> a palindrome!";
                 }
-            }
+          }
 
+            // returns today's date
             function getTodaysDate() {
-                let newDate = new Date().toLocaleDateString();
-                return newDate;
+              let newDate = new Date().toLocaleDateString();
+              return newDate;
             }
 
+            // splits the input, reverses it, then rejoins it to a new variable (o) and returns it
             function reverse(z) {
-                let t = z.split("");
-                let p = t.reverse();
-                let o = p.join("");
-                return o;
+              let t = z.split("");
+              let p = t.reverse();
+              let o = p.join("");
+              return o;
             }
             
+            // gets the length of the input and returns it
             function getLength(x) {
-                let y = x.length;
-                return y;
+              let y = x.length;
+              return y;
             }
 
+            // determines if the input is a palindrome by either returning true or false if the reverse equals the original variable string
             function isPalindrome(a) {
-                let b = reverse(a);
-                if (b === a) {
+              let b = reverse(a);
+              if (b === a) {
                     return true;
                 } else {
                     return false;
