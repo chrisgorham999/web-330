@@ -177,11 +177,13 @@
           document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
         }
 
-        import { Bill, Beverage, Appetizer, MainCourse, Dessert } from "./index.js";//importing the single index file
+        // imports the different .js functions from a single index file
+        import { Bill, Beverage, Appetizer, MainCourse, Dessert } from "./index.js";
 
+        // creates the onClick functionality for the order button
         document.getElementById("btnOrder").onclick = function() {
  
-            //Assigning the variables to their correct labels from the html id's
+            // assigns variables
             const beveragesx = document.getElementById("beverages")
             const beverages = beveragesx.getElementsByTagName('input');
 
