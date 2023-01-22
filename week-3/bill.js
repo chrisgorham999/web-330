@@ -1,3 +1,14 @@
+/*
+======================================
+; Title: bill.js 
+; Author: Professor Krasso
+; Date: 20 Jan 2023
+; Modified By: Chris Gorham
+; Description: This code is used to calculate the bill in the Restaurant App
+; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
+;=====================================
+*/
+
 export class Bill {
     _beverages = [];
     _appetizers = [];
