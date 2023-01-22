@@ -31,7 +31,7 @@
         <!--- Font Awesome CDN-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <!---The JavaScript source doe for the theme functions setDefaultTheme and setSelectedTheme-->
+        <!---The JavaScript source code for the theme functions setDefaultTheme and setSelectedTheme-->
         <script src="../theme.js"></script>
 
 </head>
@@ -50,6 +50,7 @@
 
                 <div class="card-title">Restaurant Menu</div><br>
                 
+                <!-- Need a grid to make it look like the example-->
                 <div class="grid-container">
                   
                   <!-- Card for the Beverages-->
@@ -200,10 +201,10 @@
             const dessertsx = document.getElementById("desserts")
             const desserts = dessertsx.getElementsByTagName('input');
 
-            //new class of Bill
+            //new Bill
             let bill = new Bill();
 
-            //Loops for the item selected which goes through bills.js to calc as well as assign the name and values
+            // for loop to go through all of the options that are checked
             for (let beverage of beverages) {
                 if (beverage.checked) {
                     bill.addBeverage(new Beverage(beverage.name, beverage.value))
@@ -228,7 +229,8 @@
                 }
             };
 
-            document.getElementById('order-total').innerHTML = `Your order total is ${bill.getTotal().toFixed(2)}`;//results to results card
+            // print the total to the Order Summary area
+            document.getElementById('order-total').innerHTML = `Your order total is $ ${bill.getTotal().toFixed(2)}`;
 
         }
 
