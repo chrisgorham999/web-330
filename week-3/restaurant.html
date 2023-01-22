@@ -144,7 +144,7 @@
 
     </div>
 
-        <script type="module">
+        <script>
 
         // sets a default theme; this code needs to be first
         setDefaultTheme();
@@ -176,6 +176,10 @@
           iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
           document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
         }
+
+        </script>
+
+        <script type="module">
 
         // imports the different .js functions from a single index file
         import { Bill, Beverage, Appetizer, MainCourse, Dessert } from "./index.js";
