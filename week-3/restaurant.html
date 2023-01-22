@@ -204,7 +204,7 @@
             //new Bill
             let bill = new Bill();
 
-            // for loop to go through all of the options that are checked
+            // for loops for each category to go through all of the options that are checked
             for (let beverage of beverages) {
                 if (beverage.checked) {
                     bill.addBeverage(new Beverage(beverage.name, beverage.value))
