@@ -7,6 +7,7 @@
 ; Description: This code is for Restaurant App HTML & JavaScript
 ; Sources Used: 
 ; Web 330 HTML, CSS, and JavaScript Requirements Word Document
+; W3 Schools CSS Grids, URL: https://www.w3schools.com/css/css_grid.asp
 =====================================
 -->
 
@@ -21,6 +22,7 @@
 
         <link rel="stylesheet" type="text/css" href="../theme.css">
         <link rel="stylesheet" type="text/css" href="../site.css">
+        <link rel="stylesheet" type="text/css" href="restaurant.css">
 
         <!-- Google Font Set (Oswald) for WEB 330-->
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -45,23 +47,81 @@
 
         <div class="assign-content">
             <div class="card">
-                <div class="card-title">Restaurant Menu</div><br>
-                <div class="card-content">
-                    <div class="form">
-                        <div class="form-field">
-                            <label class="form-field">Phrase value:</label>
-                            <input class="input" id="txtPhrase">
-                        </div>
-                            
-                        <div class="form-field">
-                            <button class="btn btn-primary" id="btnCheckPhrase">Check Phrase</button>
-                        </div>
 
+                <div class="card-title">Restaurant Menu</div><br>
+                
+                <div class="grid-container">
+                  
+                  <!-- Card for the Beverages-->
+                  <div class="card">
+                    <div class="card-title">Beverages</div>
+                    <div class="card-content" id="beverages">
+                      <label for="soda">
+                        <input type="checkbox" id="soda" name="soda" value="3.30">Soda ($3.30)</label><br>
+                    <label for="tea">
+                        <input type="checkbox" id="tea" name="tea" value="3.19">Sweet Tea ($3.19)</label><br>
+                    <label for="coffee">
+                        <input type="checkbox" id="coffee" name="coffee" value="2.29">Hot Coffee ($1.29)</label><br>
+                    <label for="water">
+                        <input type="checkbox" id="water" name="water" value="1.99">Bottled Water ($1.99)</label><br>
+                    </div>
+                  </div>
+
+                  <!-- Card for the Appetizers-->
+                  <div class="card">
+                    <div class="card-title">Appetizers</div>
+                    <div class="card-content" id="appetizers">
+                    <label for="mozzerela-sticks">
+                      <input type="checkbox" id="mozzerela-sticks" name="mozzerela-sticks" value="4.99">Mozzerela Sticks ($4.99)</label><br>
+                  <label for="jalapeno-poppers">
+                      <input type="checkbox" id="jalapeno-poppers" name="jalapeno-poppers" value="3.50">Jalapeno Poppers ($3.50)</label><br>
+                  <label for="nachos">
+                      <input type="checkbox" id="nachos" name="nachos" value="6.99">Nachos ($6.99)</label><br>
+                  <label for="spinach-dip">
+                      <input type="checkbox" id="spinach-dip" name="spinach-dip" value="8.25">Spinach Dip ($7.99)</label><br>
+                    </div>
+                  </div>
+
+                  <!-- Card for the Main Courses-->
+                  <div class="card">
+                    <div class="card-title">Main Courses</div>
+                    <div class="card-content" id="main-courses">
+                      <label for="steak">
+                        <input type="checkbox" id="steak" name="steak" value="10.99">Salisbury Steak ($10.99)</label><br>
+                    <label for="chicken">
+                        <input type="checkbox" id="chicken" name="chicken" value="13.99">Baked Chicken ($13.99)</label><br>
+                    <label for="tilapia">
+                        <input type="checkbox" id="tilapia" name="tilapia" value="16.99">Fried Tilapia ($16.99)</label><br>
+                    <label for="grilled-cheese">
+                        <input type="checkbox" id="grilled-cheese" name="grilled-cheese" value="9.99">Grilled Cheese ($9.99)</label><br>
+                    </div>
+                  </div>
+
+                  <!-- Card for the Desserts-->
+                  <div class="card">
+                    <div class="card-title">Desserts</div>
+                    <div class="card-content" id="desserts">
+                      <label for="cheese-cake">
+                        <input type="checkbox" id="cheese-cake" name="cheese-cake" value="7.99">Cheese Cake ($7.99)</label><br>
+                    <label for="ice-cream-sundae">
+                        <input type="checkbox" id="ice-cream-sundae" name="ice-cream-sundae" value="6.99">Ice Cream Sundae ($6.99)</label><br>
+                    <label for="funnel-cake">
+                        <input type="checkbox" id="funnel-cake" name="funnel-cake" value="5.99">Funnel Cake ($5.99)</label><br>
+                        <div class="form-field">
+                          <button class="btn btn-primary full-width" id="btnOrder">Place Order</button>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+                          
                     </div>
                 </div>
                 </div>
-            </div>
-        </div>
+    
 
         <!-- return home link !-->
         <div class="assign-content">
@@ -75,7 +135,7 @@
             <div class="card">
                 <div class="card-title">Order Summary</div>
                 <div id="assign-results-header"></div>
-                <div class="assign-results-text" id="assign-results"></div>
+                <div class="card-content assign-results-text" id="order-total"></div>
             </div>
         </div>    
 
@@ -117,54 +177,54 @@
           document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
         }
 
-        // creates the onclick functionality for the "check phrase" button
-        document.getElementById("btnCheckPhrase").onclick = function() {
-          // establishes the variables that the functions will populate
-          let txtPhrase = document.getElementById("txtPhrase").value;
-          let today = getTodaysDate();
-          let reversedPhrase = reverse(txtPhrase);
-          let len = getLength(txtPhrase);
-          // header contains HTML styling for the string that is printed
-          let header = `<p style="padding-left:10px;">` + "Date: " + today + `<br>` + "Original Phrase: " + txtPhrase + `<br>` + "Reversed Phrase: " + reversedPhrase + `<br>` + "Phrase Length: " + len;
-          // prints header string to the appropriate spot
-          document.getElementById("assign-results-header").innerHTML = header;
-                // the if/else if code to print whether or not the input is a palindrome (or not) - is changed to lowercase prior to comparing
-                if (isPalindrome(txtPhrase.toLowerCase()) === true) {
-                    document.getElementById("assign-results").innerHTML = txtPhrase + " <b><u>is</u></b> a palindrome!";
-                } else if (isPalindrome(txtPhrase.toLowerCase()) === false) {
-                    document.getElementById("assign-results").innerHTML = txtPhrase + " <b><u>is not</b></u> a palindrome!";
+        import { Bill, Beverage, Appetizer, MainCourse, Dessert } from "./index.js";//importing the single index file
+
+        document.getElementById("btnOrder").onclick = function() {
+ 
+            //Assigning the variables to their correct labels from the html id's
+            const beveragesEl = document.getElementById("beverages")
+            const beverages = beveragesEl.getElementsByTagName('input');
+
+            const appetizersEl = document.getElementById("appetizers")
+            const appetizers = appetizersEl.getElementsByTagName('input');
+
+            const mainCoursesEl = document.getElementById("main-courses")
+            const mainCourses = mainCoursesEl.getElementsByTagName('input');
+
+            const dessertsEl = document.getElementById("desserts")
+            const desserts = dessertsEl.getElementsByTagName('input');
+
+            //new class of Bill
+            let bill = new Bill();
+
+            //Loops for the item selected which goes through bills.js to calc as well as assign the name and values
+            for (let beverage of beverages) {
+                if (beverage.checked) {
+                    bill.addBeverage(new Beverage(beverage.name, beverage.value))
                 }
-          }
+            };
 
-            // returns today's date
-            function getTodaysDate() {
-              let newDate = new Date().toLocaleDateString();
-              return newDate;
-            }
-
-            // splits the input, reverses it, then rejoins it to a new variable (o) and returns it
-            function reverse(z) {
-              let t = z.split("");
-              let p = t.reverse();
-              let o = p.join("");
-              return o;
-            }
-            
-            // gets the length of the input and returns it
-            function getLength(x) {
-              let y = x.length;
-              return y;
-            }
-
-            // determines if the input is a palindrome by either returning true or false if the reverse equals the original variable string
-            function isPalindrome(a) {
-              let b = reverse(a);
-              if (b === a) {
-                    return true;
-                } else {
-                    return false;
+            for (let appetizer of appetizers) {
+                if (appetizer.checked) {
+                    bill.addAppetizer(new Appetizer(appetizer.name, appetizer.value))
                 }
-            }
+            };
+
+            for (let mainCourse of mainCourses) {
+                if (mainCourse.checked) {
+                    bill.addMainCourse(new MainCourse(mainCourse.name, mainCourse.value))
+                }
+            };
+
+            for (let dessert of desserts) {
+                if (dessert.checked) {
+                    bill.addDessert(new Dessert(dessert.name, dessert.value))
+                }
+            };
+
+            document.getElementById('order-total').innerHTML = `Your order total is ${bill.getTotal().toFixed(2)}`;//results to results card
+
+        }
 
         </script>
 
