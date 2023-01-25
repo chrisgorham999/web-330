@@ -17,7 +17,7 @@ import { FoodModel } from "./food-model.js";
 
 export class CalorieConverter {
     static data = [
-        new FoodModel(1007, "Egg", 78),
+        new FoodModel(1007, "egg", 78),
         new FoodModel(1008, "Apple", 95),
         new FoodModel(1009, "Hamburger", 354),
         new FoodModel(1010, "Fries", 400),
