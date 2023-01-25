@@ -24,8 +24,9 @@ export class CalorieConverter {
         new FoodModel(1011, "Banana", 105),
         new FoodModel(1012, "Soda", 150)
     ];
+
     static find(x) {
-        return this.data.filter(FoodModel[this.name.x]);
+        let datax = data.f
     }
     }
 

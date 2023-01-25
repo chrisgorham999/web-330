@@ -168,7 +168,7 @@ h2,h3,h4 {
 }
 
 .table {
-    
+    border-color: var(--table-border-color);
 }
 
 .table th {
@@ -177,9 +177,14 @@ h2,h3,h4 {
 }
 
 .table td, th {
-    border: var(--table-border-color);
+    border-color: var(--table-border-color);
 }
 
 .table-hover {
-    tr:hover var(--btn-hover-background-color)
+
 }
+
+.table-hover:hover {
+    background-color: var(--table-hover-background-color);
+    color: var(--table-hover-color);
+} 
