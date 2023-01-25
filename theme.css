@@ -28,6 +28,11 @@ body.light-theme {
 --btn-hover-background-color: #D6A800;
 --btn-hover-color: #4F3674;
 --input-border-color: #ccc;
+--table-header-background-color: #4F3674;
+--table-header-color: #fff;
+--table-border-color: #ddd;
+--table-hover-background-color: #D6A800;
+--table-hover-color: #4F3674;
 }
 
 /* creates all the values and sets all the variable names for the dark theme */
@@ -49,6 +54,11 @@ body.dark-theme {
 --btn-hover-background-color: #7d4787;
 --btn-hover-color: #fff;
 --input-border-color: #303030;
+--table-header-background-color: #d176e1;
+--table-header-color: #fff;
+--table-border-color: #303030;
+--table-hover-background-color: #7d4787;
+--table-hover-color: #fff;
 }
 
 /* references the attribute variables so that the color will be according to the theme selected by the user */
@@ -155,4 +165,21 @@ h2,h3,h4 {
     border-color: var(--input-border-color);
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.table {
+    
+}
+
+.table th {
+    background-color: var(--table-header-background-color);
+    color: var(--table-header-color);
+}
+
+.table td, th {
+    border: var(--table-border-color);
+}
+
+.table-hover {
+    tr:hover var(--btn-hover-background-color)
 }

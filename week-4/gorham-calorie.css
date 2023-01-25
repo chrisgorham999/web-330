@@ -1,0 +1,17 @@
+/*
+======================================
+; Title: gorham-calorie.css 
+; Author: Professor Krasso
+; Date: 25 Jan 2023
+; Modified By: Chris Gorham
+; Description: This code is for additional styling requirements of the calorie app
+; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
+;=====================================
+*/
+
+#foodList {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}

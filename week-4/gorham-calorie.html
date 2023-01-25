@@ -1,0 +1,131 @@
+<!-- 
+======================================
+; Title: Assignment 4.2 - Calorie App
+; Author: Professor Krasso
+; Date: 25 Jan 2023
+; Modified By: Chris Gorham
+; Description: This code is for the Calorie App HTML & JavaScript
+; Sources Used: 
+; Web 330 HTML, CSS, and JavaScript Requirements Word Document
+=====================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+        <meta charset="UTF-8">
+        <title>WEB 330 - Enterprise JavaScript II</title>
+
+
+        <link rel="stylesheet" type="text/css" href="../theme.css">
+        <link rel="stylesheet" type="text/css" href="../site.css">
+        <link rel="stylesheet" type="text/css" href="gorham-calorie.css">
+
+        <!-- Google Font Set (Oswald) for WEB 330-->
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+        <!--- Font Awesome CDN-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!---The JavaScript source doe for the theme functions setDefaultTheme and setSelectedTheme-->
+        <script src="../theme.js"></script>
+
+</head>
+
+
+<body class="light-theme">
+            <!-- Creates the icon and adds the onclick functionality for changing between themes-->
+            <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right" style="font-size: 28px;"><span id="icon-text"></span></i><br>
+
+    <div id="assign-container">
+
+        <h1 class="app-header">Welcome to the Calorie App!</h1>
+
+        <div class="assign-content">
+            <div class="card">
+                <div class="card-title">Calorie Search Form</div><br>
+                <div class="card-content">
+                    <div class="form">
+                        <div class="form-field">
+                            <label class="form-field">Enter a food item:</label>
+                            <input class="input" id="txtPhrase">
+                            <span id="foodList"></span>
+                        </div>
+                            
+                        <div class="form-field">
+                            <button class="btn btn-primary" id="btnSearch">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- return home link !-->
+        <div class="assign-content">
+                <a href="../index.html">Return</a>
+        </div>
+                
+                
+
+        <!-- Results Card-->
+        <div class="assign-content">
+            <div class="card">
+                <div class="card-title">Search Results</div>
+                <div id="assign-results-header"></div>
+                <table>
+                    <th id="search results"></th>
+                </table>
+                <div class="assign-results-text" id="assign-results"></div>
+            </div>
+        </div>    
+
+
+
+
+    </div>
+
+        <script>
+
+        // sets a default theme; this code needs to be first
+        setDefaultTheme();
+    
+        // the function which will toggle between the two different themes
+        function toggleMode(x) {
+          let colorTheme = document.body.classList; // establishes the variable that holds the body CSS class
+          let iconMode = x.classList; // gets the classes 
+
+          // if the value shows light, update the preference in storage
+          if (colorTheme.value === "light-theme")
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "dark-theme");
+            localStorage.setItem("iconMode", "fa-toggle-on");
+            localStorage.setItem("iconText", "Dark Mode");
+          }
+        
+          else
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "light-theme");
+            localStorage.setItem("iconMode", "fa-toggle-off");
+            localStorage.setItem("iconText", "Light Mode");
+          }
+
+          // applies the updated theme selection
+          colorTheme.value = localStorage.getItem("mode");
+          iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+          document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
+        }
+
+
+        </script>
+
+</body>
+
+
+</html>
