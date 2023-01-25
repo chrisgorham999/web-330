@@ -128,7 +128,7 @@
             
             document.getElementById("btnSearch").onclick = function() {
                  let txtFoodItem = document.getElementById("txtFoodItem");
-                 let foods = find(txtFoodItem).toLowerCase();
+                 let foods = find(txtFoodItem);
                  let tableData = `<table><th>Name</th><th>Calories</th>`;
                     
                   for(let food of foods) {
