@@ -8,3 +8,11 @@
 ; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
 ;=====================================
 */
+
+export class FoodModel {
+  constructor (id, name, calories) {
+    this.id = id;
+    this.name = name;
+    this.calories = calories;
+  }
+}
