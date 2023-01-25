@@ -123,7 +123,7 @@
 
         <script type="module">
 
-            import {CalorieConverter} from "./calorie-converter.js";
+            import { CalorieConverter } from "./calorie-converter.js";
 
             let txtFoodItemEl = document.getElementByID("txtFoodItem").value;
 
@@ -137,9 +137,10 @@
                         <td>${foods.name}</td>
                         <td>${foods.calories}</td>
                         </tr>`;
+                        document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }
                                     
-                document.getElementById("searchResults").innerHTML = tableData + `</table>`;
+               
             }
 
         </script>
