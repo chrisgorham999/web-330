@@ -124,10 +124,11 @@
         <script type="module">
 
             import { CalorieConverter } from "./calorie-converter.js";
+            let txtFoodItemEl = document.getElementById("txtFoodItem");
 
             
             document.getElementById("btnSearch").onclick = function() {
-                 let txtFoodItem = document.getElementById("txtFoodItem");
+                 let txtFoodItem = document.getElementById("txtFoodItem").value;
                  let foods = find(txtFoodItem);
                  let tableData = `<table><th>Name</th><th>Calories</th>`;
                     
