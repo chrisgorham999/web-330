@@ -13,7 +13,7 @@
 ;=====================================
 */
 
-import { FoodModel } from "./food-model";
+import { FoodModel } from "./food-model.js";
 
 export class CalorieConverter {
     static data = [
