@@ -134,9 +134,9 @@
                     
                   for(let food of foods) {
                     tableData +=`<tr>
-                        <td>${food.id}</td>
+                        <td>${food.calories}</td>
                         <td>${foods.name}</td>
-                        <td>${foods.calories}</td>
+                        <td>${food.id}</td>
                         </tr>`;
                         document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }
