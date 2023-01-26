@@ -28,6 +28,7 @@ export class CalorieConverter {
     ];
 
     static find(name) {
-        return data.filter(FoodModel => FoodModel.name === name);
-        } 
+        const x = data.filter(FoodModel => FoodModel.name === name);
+        console.log(x);
+        }
 }
