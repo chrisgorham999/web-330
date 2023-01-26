@@ -7,6 +7,8 @@
 ; Description: This code is for the Calorie App HTML & JavaScript
 ; Sources Used: 
 ; Web 330 HTML, CSS, and JavaScript Requirements Word Document
+; Keyboard Events on JavaScript.info, URL: https://javascript.info/keyboard-events
+; JavaScript String slice(), URL: https://www.w3schools.com/jsref/jsref_slice_string.asp
 =====================================
 -->
 
@@ -122,9 +124,12 @@
 
         <script type="module">
 
+            // imports the CalorieConverter class
             import { CalorieConverter } from "./calorie-converter.js";
             
+            // onclick function for the search button
             document.getElementById("btnSearch").onclick = function() {
+                 // sets the 
                  let txtFoodItem = document.getElementById("txtFoodItem").value;
                  let foods = CalorieConverter.find(txtFoodItem);
                  let tableData = `<table class="table"><th>Name</th><th>Calories</th>`;
@@ -137,12 +142,20 @@
                         document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }
             }
-
-            document.addEventListener('keyup', (enter) => {
-                if (event.key === "Enter") {
-                    document.getElementByID("btnSearch").click();
+            
+            // adds the event listener and code to "click" the search button if the user hits the enter button
+            document.addEventListener('keyup', function(event) {
+                if (event.code == 'Enter') {
+                    document.getElementById("btnSearch").click();
                 }
+            });
+
+            let foodList = CalorieConverter.data;
+            let foodListData = `<i> (Ex:`;
+            for (let x of foodList) {
+                foodListData += ` ${x.name},`;
             }
+            document.getElementById("foodList").innerHTML = foodListData.slice(0,51) + `)</i>`;
 
         </script>
 </body>
