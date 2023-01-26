@@ -13,7 +13,7 @@
 ;=====================================
 */
 
-"use-strict";
+'use-strict';
 
 import { FoodModel } from "./food-model.js";
 
@@ -27,7 +27,8 @@ export class CalorieConverter {
         new FoodModel(1012, "Soda", 150)
     ];
 
-    static find(name) {
-        return data.filter(FoodModel => FoodModel.name === name);
+    static find(query) {
+        return CalorieConverter.data.filter(dataset => dataset.name.includes(query))
+        ;
         }
-}
+    }

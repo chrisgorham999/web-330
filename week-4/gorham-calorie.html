@@ -126,13 +126,13 @@
             
             document.getElementById("btnSearch").onclick = function() {
                  let txtFoodItem = document.getElementById("txtFoodItem").value;
-                 let foods = [find(txtFoodItem.toLowerCase())];
+                 let foods = CalorieConverter.find(txtFoodItem);
                  let tableData = `<table class="table"><th>Name</th><th>Calories</th>`;
                     
                   for (let food of foods) {
                     tableData +=`<tr class="table-hover">
-                        <td>${foods.id}</td>
-                        <td>${foods.name}</td>
+                        <td>${food.name}</td>
+                        <td>${food.calories}</td>
                         </tr>`;
                         document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }

@@ -9,7 +9,7 @@
 ;=====================================
 */
 
-"use-strict";
+'use-strict';
 
 export class FoodModel {
   constructor (id, name, calories) {
