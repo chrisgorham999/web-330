@@ -123,18 +123,16 @@
         <script type="module">
 
             import { CalorieConverter } from "./calorie-converter.js";
-            let txtFoodItemEl = document.getElementById("txtFoodItem");
-
             
             document.getElementById("btnSearch").onclick = function() {
                  let txtFoodItem = document.getElementById("txtFoodItem").value;
                  let foods = [find(txtFoodItem.toLowerCase())];
                  let tableData = `<table class="table"><th>Name</th><th>Calories</th>`;
                     
-                  for(let food of foods) {
-                    tableData +=`<tr>
-                        <td class="table-hover">${food.name}</td>
-                        <td class="table-hover">${foods.name}</td>
+                  for (let food of foods) {
+                    tableData +=`<tr class="table-hover">
+                        <td>${foods.id}</td>
+                        <td>${foods.name}</td>
                         </tr>`;
                         document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }

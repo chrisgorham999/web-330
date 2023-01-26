@@ -187,4 +187,5 @@ h2,h3,h4 {
 .table-hover:hover {
     background-color: var(--table-hover-background-color);
     color: var(--table-hover-color);
+    cursor: pointer;
 } 

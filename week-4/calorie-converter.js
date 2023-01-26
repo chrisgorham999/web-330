@@ -13,6 +13,8 @@
 ;=====================================
 */
 
+"use-strict";
+
 import { FoodModel } from "./food-model.js";
 
 export class CalorieConverter {
@@ -25,9 +27,7 @@ export class CalorieConverter {
         new FoodModel(1012, "Soda", 150)
     ];
 
-    static find(x) {
-        let datax = data.f
-    }
-    }
-
-
+    static find(name) {
+        return data.filter(FoodModel => FoodModel.name === name);
+        } 
+}
