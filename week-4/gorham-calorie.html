@@ -136,8 +136,12 @@
                         </tr>`;
                         document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }
-                                    
-               
+            }
+
+            document.addEventListener('keyup', (enter) => {
+                if (event.key === "Enter") {
+                    document.getElementByID("btnSearch").click();
+                }
             }
 
         </script>
