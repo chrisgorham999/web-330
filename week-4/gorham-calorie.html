@@ -52,13 +52,13 @@
                 <div class="card-content">
                     <div class="form">
                         <div class="form-field">
-                            <label class="form-field">Enter a food item:</label>
+                            <label class="form-field-modified">Enter a food item:</label>
                             <input type="text" class="input" id="txtFoodItem">
                             <span id="foodList"></span>
                         </div>
                             
                         <div class="form-field">
-                            <button class="btn btn-primary" id="btnSearch">Search</button>
+                            <button class="btn btn-primary btn-modified" id="btnSearch">Search</button>
                         </div>
 
                     </div>
@@ -88,6 +88,8 @@
     </div>
 
         <script>
+        
+        "use-strict";
 
         // sets a default theme; this code needs to be first
         setDefaultTheme();
@@ -124,40 +126,53 @@
 
         <script type="module">
 
+            "use-strict";
+
             // imports the CalorieConverter class
             import { CalorieConverter } from "./calorie-converter.js";
             
             // onclick function for the search button
             document.getElementById("btnSearch").onclick = function() {
-                 // sets the 
-                 let txtFoodItem = document.getElementById("txtFoodItem").value;
-                 let foods = CalorieConverter.find(txtFoodItem);
-                 let tableData = `<table class="table"><th>Name</th><th>Calories</th>`;
-                    
-                  for (let food of foods) {
-                    tableData +=`<tr class="table-hover">
-                        <td>${food.name}</td>
-                        <td>${food.calories}</td>
-                        </tr>`;
-                        document.getElementById("searchResults").innerHTML = tableData + `</table>`;
+              // sets the inputted value to a variable
+              let txtFoodItem = document.getElementById("txtFoodItem").value;
+              // calls the find function from the Calorie Converter class
+              let foods = CalorieConverter.find(txtFoodItem);
+              // formats the table search results
+              let tableData = `<table class="table"><th class="th-modified">Name</th><th class="th-modified">Calories</th>`;
+              // for of loop to populate the table
+              for (let food of foods) {
+                tableData +=`<tr class="table-hover">
+                  <td class="td-modified">${food.name}</td>
+                  <td class="td-modified">${food.calories}</td>
+                  </tr>`;
+              // posts the tableData to the searchResults Div  
+              document.getElementById("searchResults").innerHTML = tableData + `</table>`;
                  }
-            }
+              }
             
             // adds the event listener and code to "click" the search button if the user hits the enter button
-            document.addEventListener('keyup', function(event) {
-                if (event.code == 'Enter') {
-                    document.getElementById("btnSearch").click();
+            let txtFoodItemEl = document.getElementById("txtFoodItem");
+            // assigns the events listener to inside the input text box
+            txtFoodItemEl.addEventListener('keyup', function(event) {
+              if (event.code == 'Enter') {
+                // runs the btnSearch click function when Enter is pressed
+                document.getElementById("btnSearch").click();
                 }
-            });
-
+              });
+            
+            // defines variables to populate the food list under the input text box
             let foodList = CalorieConverter.data;
+            // formats the food list string
             let foodListData = `<i> (Ex:`;
+            // for of loop to populate the food list
             for (let x of foodList) {
                 foodListData += ` ${x.name},`;
             }
+            // prints the food list to the foodList area
             document.getElementById("foodList").innerHTML = foodListData.slice(0,51) + `)</i>`;
 
         </script>
+        
 </body>
 
 

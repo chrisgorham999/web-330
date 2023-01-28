@@ -15,3 +15,24 @@
     font-size: 12px;
     letter-spacing: 2px;
 }
+
+/* Added to match the example */
+.form-field-modified {
+    padding: 2px;
+}
+
+/* Added to match the example */
+.btn-modified {
+    width: 55%;
+}
+
+/* Added to match the example */
+.th-modified {
+    padding: 9px;
+    text-align: left;
+}
+
+/* Added to match the example */
+.td-modified {
+    padding: 5px;
+}

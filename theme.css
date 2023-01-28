@@ -169,6 +169,7 @@ h2,h3,h4 {
 
 .table {
     border-color: var(--table-border-color);
+    border-collapse: collapse;
 }
 
 .table th {
@@ -178,6 +179,7 @@ h2,h3,h4 {
 
 .table td, th {
     border-color: var(--table-border-color);
+    border-style: solid;
 }
 
 .table-hover {

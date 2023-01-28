@@ -9,8 +9,9 @@
 ;=====================================
 */
 
-'use-strict';
+"use-strict";
 
+// creates the FoodModel class
 export class FoodModel {
   constructor (id, name, calories) {
     this.id = id;
