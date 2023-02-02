@@ -11,10 +11,11 @@
 ;=====================================
 */
 
+import { Product } from "./product.js";
 
 export class ShoppingCart {
     constructor () {
-        this.products = [];
+        this.products = []
     }
 
     count() {
@@ -28,5 +29,5 @@ export class ShoppingCart {
         for (let product of this.products) {
             yield product
         }
-      }
+    }
 }

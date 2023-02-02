@@ -60,11 +60,11 @@
                             <label class="form-field ">Choose a product:</label>
                             <select class="drop-down-menu" id="productList">
                             <option value="select">--Select--</option>
-                            <option value="oil">Oil Change</option>
-                            <option value="filter">Filter Replacement</option>
-                            <option value="wiper">Wiper Fluid Refill</option>
-                            <i id="cart-message"></i>
+                            <option value="19.99">Oil Change</option>
+                            <option value="18.44">Filter Replacement</option>
+                            <option value="9.99">Wiper Fluid Refill</option>
                             </select>
+                            <i id="cart-message">To view your shopping cart click on the cart icon</i>
                         </div>
                             
                         <div class="form-field">
@@ -138,30 +138,28 @@
 
         <script type="module">
 
-            "use-strict";
-
             // imports the Product and ShoppingCart class
             import { Product } from "./product.js";
             import { ShoppingCart } from "./shopping-cart.js";
 
-            let shoppingCart = new ShoppingCart;
+            let shoppingCart = new ShoppingCart();
 
-            setCartCount()
+            setCartCount();
             
             // onclick function for the Add Product button
             document.getElementById("btnAddProduct").onclick = function() {            
-              let productList = document.getElementById("productList").value;
+              let productList = document.getElementById("productList");
               let product = productList.options[productList.selectedIndex].text;
               let productValue = productList.options[productList.selectedIndex].value;
+              document.getElementById("productList").id = "select";
 
               if (product === "--Select--") {
-                console.log("Please select a product");
+                alert("Please select a product");
               }
               else {
-                ShoppingCart.add(product);
+                shoppingCart.add(new Product(product, productValue));
                 setCartCount();
-                console.log(product + "was added to your shopping cart!");
-                document.getElementById("productList").option = select;
+                alert(product + " was added to your shopping cart!");
               }
             }
 
@@ -171,16 +169,14 @@
                         <th class="th-modified">ID</th>
                         <th class="th-modified">Name</th>
                         <th class="th-modified">Price</th>`;
-              console.log(shoppingCart);
-              for (product of shoppingCart) {
-                console.log(product);
-                cartDisplayTable += `<tr class="table-hover"><td>${product.ID}</td><td>${product.name}</td><td>${product.price}</td></tr>`;
+              for (let product of shoppingCart) {
+                cartDisplayTable += `<tr class="table-hover"><td>${product.id}</td><td>${product.name}</td><td>${product.price}</td></tr>`;
               }
-              document.getElementById("shoppingCart").innerHTML = cartDisplayTable;
+              document.getElementById("shoppingCart").innerHTML = cartDisplayTable + `</table>`;
             }
 
             function setCartCount() {
-              let results = ShoppingCart.count();
+              let results = shoppingCart.count();
               document.getElementById("cart-count").innerHTML = results;
             }
           
