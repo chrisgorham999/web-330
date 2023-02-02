@@ -12,7 +12,7 @@
 
 /* Added to match the example */
 .btn-modified {
-    width: 100%;
+    width: 60%;
 }
 
 #cart-message {
@@ -20,9 +20,11 @@
     color: #df546a;
     font-size: 12px;
     letter-spacing: 2px;
+/* Added to match the example */
+    margin-left: 20px;
 }
 
-.cart-message:hover {
+#cart-message:hover {
     cursor: pointer;
 }
 
@@ -34,5 +36,10 @@
 
 /* Added to match the example */
 .td-modified {
-    padding: 5px;
+    padding: 7px;
+}
+
+/* Added to match the example */
+.form-field-modified {
+    padding: 2px;
 }

@@ -56,7 +56,7 @@
                 
                 <div class="card-content">
                     <div class="form">
-                        <div class="form-field">
+                        <div class="form-field-modified">
                             <label class="form-field ">Choose a product:</label>
                             <select class="drop-down-menu" id="productList">
                             <option value="Select">--Select--</option>
@@ -64,7 +64,7 @@
                             <option value="18.44">Filter Replacement</option>
                             <option value="9.99">Wiper Fluid Refill</option>
                             </select>
-                            <i id="cart-message">To view your shopping cart click on the cart icon</i>
+                            <i id="cart-message">To view your shopping cart click on the cart icon</i><br><br>
                         </div>
                             
                         <div class="form-field">
@@ -170,7 +170,7 @@
                         <th class="th-modified">Name</th>
                         <th class="th-modified">Price</th>`;
               for (let product of shoppingCart) {
-                cartDisplayTable += `<tr class="table-hover"><td>${product.id}</td><td>${product.name}</td><td>${product.price}</td></tr>`;
+                cartDisplayTable += `<tr class="table-hover"><td class="td-modified">${product.id}</td><td class="td-modified">${product.name}</td><td class="td-modified">${product.price}</td></tr>`;
               }
               document.getElementById("shoppingCart").innerHTML = cartDisplayTable + `</table>`;
             }
