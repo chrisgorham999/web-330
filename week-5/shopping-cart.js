@@ -11,17 +11,20 @@
 ;=====================================
 */
 
-import { Product } from "./product.js";
+"use-strict";
 
+// creates  the ShoppingCart class, count function, and add function
 export class ShoppingCart {
     constructor () {
         this.products = []
     }
-
+    
+    // counts the number of products 
     count() {
       return this.products.length
     }
 
+    // adds a product to products using an iterator
     add(product) {
       this.products.push(product);
     }

@@ -10,12 +10,13 @@
 */
 
 
-
+// creates CartComponent class and extends it for use in our html file
 class CartComponent extends HTMLElement {
     constructor () {
         super();
     }
 
+    // the CallBack function and the associated html to attach to it
     connectedCallback() {
         this.innerHTML = `
         <i id="cartIcon" class="fa fa-shopping-cart"></i> (<span id="cart-count"></span>)
@@ -23,4 +24,5 @@ class CartComponent extends HTMLElement {
     }
 }
 
+// defines the id to call in the html file
 customElements.define("cart-component", CartComponent);

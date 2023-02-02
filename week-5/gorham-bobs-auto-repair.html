@@ -51,6 +51,7 @@
             <div class="card">
                 <div class="card-title">Product Listing
                   <br>
+                  <!--cart-component import from cart-component.js-->
                   <cart-component></cart-component>
                 </div>
                 
@@ -138,12 +139,16 @@
 
         <script type="module">
 
+            "use-strict";
+
             // imports the Product and ShoppingCart class
             import { Product } from "./product.js";
             import { ShoppingCart } from "./shopping-cart.js";
 
+            // create a new ShoppingCart class to populate
             let shoppingCart = new ShoppingCart();
 
+            // set the initial cart count
             setCartCount();
             
             // onclick function for the Add Product button
@@ -151,10 +156,12 @@
               let productList = document.getElementById("productList");
               let product = productList.options[productList.selectedIndex].text;
               let productValue = productList.options[productList.selectedIndex].value;
-
+              
+              // if the selcted product is select, remind them to select a product
               if (product === "--Select--") {
                 alert("Please select a product");
               }
+              // if the selected product is an actual product, add it to cart, post an alert, and reset the option drop down to --Select--
               else {
                 shoppingCart.add(new Product(product, productValue));
                 setCartCount();
@@ -169,12 +176,14 @@
                         <th class="th-modified">ID</th>
                         <th class="th-modified">Name</th>
                         <th class="th-modified">Price</th>`;
+              // for/of loop to iterate over the shopping cart and add the table data
               for (let product of shoppingCart) {
                 cartDisplayTable += `<tr class="table-hover"><td class="td-modified">${product.id}</td><td class="td-modified">${product.name}</td><td class="td-modified">${product.price}</td></tr>`;
               }
               document.getElementById("shoppingCart").innerHTML = cartDisplayTable + `</table>`;
             }
 
+            // the function to set the number in () next to the cart icon
             function setCartCount() {
               let results = shoppingCart.count();
               document.getElementById("cart-count").innerHTML = results;

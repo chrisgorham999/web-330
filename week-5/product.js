@@ -9,6 +9,9 @@
 ;=====================================
 */
 
+"use-strict";
+
+// creates the Product class and makes the ID a random radix 16 string
 export class Product {
     constructor (name, price) {
         this.name = name;
