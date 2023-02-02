@@ -59,7 +59,7 @@
                         <div class="form-field">
                             <label class="form-field ">Choose a product:</label>
                             <select class="drop-down-menu" id="productList">
-                            <option value="select">--Select--</option>
+                            <option value="Select">--Select--</option>
                             <option value="19.99">Oil Change</option>
                             <option value="18.44">Filter Replacement</option>
                             <option value="9.99">Wiper Fluid Refill</option>
@@ -151,7 +151,6 @@
               let productList = document.getElementById("productList");
               let product = productList.options[productList.selectedIndex].text;
               let productValue = productList.options[productList.selectedIndex].value;
-              document.getElementById("productList").id = "select";
 
               if (product === "--Select--") {
                 alert("Please select a product");
@@ -160,6 +159,7 @@
                 shoppingCart.add(new Product(product, productValue));
                 setCartCount();
                 alert(product + " was added to your shopping cart!");
+                document.getElementById("productList").value = "Select";
               }
             }
 
