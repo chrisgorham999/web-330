@@ -1,3 +1,13 @@
+/*
+======================================
+; Title: product.js 
+; Author: Professor Krasso
+; Date: 01 Feb 2023
+; Modified By: Chris Gorham
+; Description: This code is used for the product class in the Bob's Automotive Shop project
+; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
+;=====================================
+*/
 
 "use-strict";
 

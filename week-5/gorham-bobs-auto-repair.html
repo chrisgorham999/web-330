@@ -33,6 +33,9 @@
         <!---The JavaScript source doe for the theme functions setDefaultTheme and setSelectedTheme-->
         <script src="../theme.js"></script>
 
+        <!--Imports the CartComponent class so that it can be called under Product Listing -->
+        <script src="cart-component.js"></script>
+
 </head>
 
 
@@ -46,7 +49,11 @@
 
         <div class="assign-content">
             <div class="card">
-                <div class="card-title">Product Listing</div><br>
+                <div class="card-title">Product Listing
+                  <br>
+                  <cart-component></cart-component>
+                </div>
+                
                 <div class="card-content">
                     <div class="form">
                         <div class="form-field">
@@ -81,13 +88,8 @@
         <div class="assign-content">
             <div class="card">
                 <div class="card-title">Shopping Cart</div>
-                <div class="card-content" id="searchResults">
-                    <table>
-                        <th id="shopingCart"></th>
-                        <tr>
-                            <td id="shoppingCart"></td>
-                        </tr>
-                    </table>
+                <div class="card-content" id="shoppingCart">
+
                 </div>
             </div>
         </div>    
@@ -138,49 +140,50 @@
 
             "use-strict";
 
-            // imports the CalorieConverter class
-            import { CalorieConverter } from "./calorie-converter.js";
-            
-            // onclick function for the search button
-            document.getElementById("btnSearch").onclick = function() {
-              // sets the inputted value to a variable
-              let txtFoodItem = document.getElementById("txtFoodItem").value;
-              // calls the find function from the Calorie Converter class
-              let foods = CalorieConverter.find(txtFoodItem);
-              // formats the table search results
-              let tableData = `<table class="table"><th class="th-modified">Name</th><th class="th-modified">Calories</th>`;
-              // for of loop to populate the table
-              for (let food of foods) {
-                tableData +=`<tr class="table-hover">
-                  <td class="td-modified">${food.name}</td>
-                  <td class="td-modified">${food.calories}</td>
-                  </tr>`;
-              // posts the tableData to the searchResults Div  
-              document.getElementById("searchResults").innerHTML = tableData + `</table>`;
-                 }
-              }
-            
-            // adds the event listener and code to "click" the search button if the user hits the enter button
-            let txtFoodItemEl = document.getElementById("txtFoodItem");
-            // assigns the events listener to inside the input text box
-            txtFoodItemEl.addEventListener('keyup', function(event) {
-              if (event.code == 'Enter') {
-                // runs the btnSearch click function when Enter is pressed
-                document.getElementById("btnSearch").click();
-                }
-              });
-            
-            // defines variables to populate the food list under the input text box
-            let foodList = CalorieConverter.data;
-            // formats the food list string
-            let foodListData = `<i> (Ex:`;
-            // for of loop to populate the food list
-            for (let x of foodList) {
-                foodListData += ` ${x.name},`;
-            }
-            // prints the food list to the foodList area
-            document.getElementById("foodList").innerHTML = foodListData.slice(0,51) + `)</i>`;
+            // imports the Product and ShoppingCart class
+            import { Product } from "./product.js";
+            import { ShoppingCart } from "./shopping-cart.js";
 
+            let shoppingCart = new(ShoppingCart); //might need ()??????
+
+            setCartCount()
+            
+            // onclick function for the Add Product button
+            document.getElementById("btnAddProduct").onclick = function() {            
+              let productList = document.getElementById("productList").value;
+              let product = productList.options[productList.selectedIndex].text;
+              let productValue = productList.options[productList.selectedIndex].value;
+
+              if (product === "--Select--") {
+                console.log("Please select a product");
+              }
+              else {
+                ShoppingCart.add(product);
+                setCartCount();
+                console.log(product + "was added to your shopping cart!");
+                document.getElementById("productList").option = select;
+              }
+            }
+
+            // onclick function for the Cart icon
+            document.getElementById("cartIcon").onclick = function() {
+              let cartDisplayTable = `<table class="table">
+                        <th class="th-modified">ID</th>
+                        <th class="th-modified">Name</th>
+                        <th class="th-modified">Price</th>`;
+              console.log(shoppingCart);
+              for (product of shoppingCart) {
+                console.log(product);
+                cartDisplayTable += `<tr class="table-hover"><td>${product.ID}</td><td>${product.name}</td><td>${product.price}</td></tr>`;
+              }
+              document.getElementById("shoppingCart").innerHTML = cartDisplayTable;
+            }
+
+            function setCartCount() {
+              let results = ShoppingCart.count();
+              document.getElementById("cart-count").innerHTML = results;
+            }
+          
         </script>
         
 </body>

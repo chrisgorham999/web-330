@@ -17,8 +17,22 @@
 
 #cart-message {
     float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
 }
 
 .cart-message:hover {
     cursor: pointer;
+}
+
+/* Added to match the example */
+.th-modified {
+    padding: 9px;
+    text-align: left;
+}
+
+/* Added to match the example */
+.td-modified {
+    padding: 5px;
 }
