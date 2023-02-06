@@ -8,3 +8,15 @@
 ; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
 ;=====================================
 */
+
+.danger {
+    float: right;
+    color: #d4546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.form-label {
+    display: inline-block;
+    padding-top: 1rem;
+}

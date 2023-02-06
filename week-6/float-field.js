@@ -8,3 +8,19 @@
 ; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
 ;=====================================
 */
+
+export class FloatField {
+    constructor (name, field)
+    {
+        this.name = name;
+        this.field = field;
+    }
+
+    validate() {
+
+    }
+
+    getMessage() {
+        return "<name> must be a float value. You entered <field>"
+    }
+}

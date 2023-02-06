@@ -8,3 +8,19 @@
 ; Sources Used: Web 330 HTML, CSS, and JavaScript Requirements Word Document
 ;=====================================
 */
+
+export class FLoatMinField {
+    constructor (name, field, min) {
+        this.name = name;
+        this.field = field;
+        this.min = min;
+    }
+
+    validate() {
+
+    }
+
+    getMessage() {
+        return "<name> must be more than <min>. You entered <field>"
+    }
+}
