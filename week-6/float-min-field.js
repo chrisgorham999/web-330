@@ -9,7 +9,7 @@
 ;=====================================
 */
 
-export class FLoatMinField {
+export class FloatMinField {
     constructor (name, field, min) {
         this.name = name;
         this.field = field;
@@ -17,7 +17,14 @@ export class FLoatMinField {
     }
 
     validate() {
+        let value = parseFloat(this.field)
+        if (value > this.min) {
+            return true
+        }
 
+        else {
+            return false
+        }
     }
 
     getMessage() {

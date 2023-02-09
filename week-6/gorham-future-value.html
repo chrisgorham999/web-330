@@ -41,30 +41,72 @@
             <!-- Creates the icon and adds the onclick functionality for changing between themes-->
             <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right" style="font-size: 28px;"><span id="icon-text"></span></i><br>
 
-    <div id="assign-container">
+<div id="assign-container">
 
         <h1 class="app-header">Welcome to the Future Value App!</h1>
 
         <div class="assign-content">
             <div class="card">
                 <div class="card-title">Future Value Calculator</div>
-                
                 <div class="card-content">
-                    <div class="form">
-                        <div class="form-field-modified">
-                            <label class="form-field ">Monthly Payment:</label>
-                            <i id="cart-message">To view your shopping cart click on the cart icon</i><br><br>
-                        </div>
-                            
-                        <div class="form-field">
-                            <button class="btn btn-primary btn-modified" id="btnAddProduct">Add to Cart</button>
+                  <div class="form">
+                      <div class="form-field">
+                
+                        <div class="row col-12 danger" id="errorLog"></div>
+
+                        <div class="row">
+
+                            <label class="col-5 form-field form-label" for="txtMonthlyPayment">Monthly Payment:</label>
+                            <input type="text" class="form-field col-7" id="txtMonthlyPayment">
+                        
                         </div>
 
-                    </div>
-                </div>
-                </div>
+                        <div class="row">
+
+                          <label class="col-5 form-field form-label" for="txtYearlyRate">Interest Rate:</label>
+                          <input type="text" class="form-field col-7" id="txtYearlyRate">
+
+
+                        <div class="row">
+
+                          <i class="danger">Enter 11% as 11.1:</i>
+
+                        </div>
+                          
+
+                        </div>
+                  
+                        <div class="row">
+
+                          <label class="col-5 form-field form-label" for="listNumOfYears">Number of Years:</label>
+                          <select name="listNumOfYears" id="listNumOfYears" class="drop-down-menu col-7">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select>
+
+                        </div>
+                  
+
+
+
+                 
             </div>
-        </div>
+
+            <div class="form-field">
+              <button class="btn btn-primary btn-modified" id="btnCalculator">Calculate</button>
+            </div>
+
+        </div>         
+        </div></div>   
+
 
         <!-- return home link !-->
         <div class="assign-content">
@@ -76,12 +118,12 @@
         <!-- Results Card-->
         <div class="assign-content">
             <div class="card">
-                <div class="card-title">Shopping Cart</div>
-                <div class="card-content" id="shoppingCart">
-
+                <div class="card-title">Calculation as of <span id="today"></span></div>
+                <div class="card-content-modified" id="futureValue"></div>
+              </div>
                 </div>
-            </div>
-        </div>    
+            
+</div>    
 
 
 
@@ -129,53 +171,61 @@
 
             "use-strict";
 
-            // imports the Product and ShoppingCart class
-            import { Product } from "./product.js";
-            import { ShoppingCart } from "./shopping-cart.js";
+            // imports the FinanceCalculator and Validator class
+            import { Validator } from "./validator.js";
+            import { FinanceCalculator } from "./finance-calculator.js";
 
-            // create a new ShoppingCart class to populate
-            let shoppingCart = new ShoppingCart();
 
-            // set the initial cart count
-            setCartCount();
-            
-            // onclick function for the Add Product button
-            document.getElementById("btnAddProduct").onclick = function() {            
-              let productList = document.getElementById("productList");
-              let product = productList.options[productList.selectedIndex].text;
-              let productValue = productList.options[productList.selectedIndex].value;
-              
-              // if the selcted product is select, remind them to select a product
-              if (product === "--Select--") {
-                alert("Please select a product");
+            // populate the span tag "date" with today's date
+            document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
+
+            document.getElementById("btnCalculator").onclick = function() {
+              let monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+              let rate = document.getElementById("txtYearlyRate").value;
+              let years = document.getElementById("listNumOfYears").value;
+
+              let errorLogEl = document.getElementById("errorLog");
+
+              let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
+
+              monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator);
+              monthlyPaymentValidator.addRequiredFloatField(monthlyPaymentValidator);
+              monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator, 100);
+
+              let rateValidator = new Validator("Interest Rate", rate);
+
+              rateValidator.addRequiredField(rateValidator);
+              rateValidator.addRequiredFloatField(rateValidator);
+              rateValidator.addFloatMaxField(rateValidator, 100);
+
+              let errorLog = [];
+
+              if (!monthlyPaymentValidator.validate()) {
+                for (let msg of monthlyPaymentValidator.messages)
+                {
+                  errorLog.push(msg);
+                }
               }
-              // if the selected product is an actual product, add it to cart, post an alert, and reset the option drop down to --Select--
-              else {
-                shoppingCart.add(new Product(product, productValue));
-                setCartCount();
-                alert(product + " was added to your shopping cart!");
-                document.getElementById("productList").value = "Select";
-              }
-            }
 
-            // onclick function for the Cart icon
-            document.getElementById("cartIcon").onclick = function() {
-              let cartDisplayTable = `<table class="table">
-                        <th class="th-modified">ID</th>
-                        <th class="th-modified">Name</th>
-                        <th class="th-modified">Price</th>`;
-              // for/of loop to iterate over the shopping cart and add the table data
-              for (let product of shoppingCart) {
-                cartDisplayTable += `<tr class="table-hover"><td class="td-modified">${product.id}</td><td class="td-modified">${product.name}</td><td class="td-modified">${product.price}</td></tr>`;
+              if (!rateValidator.validate()) {
+                for (let msg of rateValidator.messages)
+                {
+                  errorLog.push(msg);
+                }
               }
-              document.getElementById("shoppingCart").innerHTML = cartDisplayTable + `</table>`;
-            }
 
-            // the function to set the number in () next to the cart icon
-            function setCartCount() {
-              let results = shoppingCart.count();
-              document.getElementById("cart-count").innerHTML = results;
-            }
+              if (monthlyPaymentValidator.validate() & rateValidator.validate() === true) {
+                errorLogEl.innerHTML = "";
+                let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+                document.getElementById("futureValue").innerHTML = "The future value is $" + futureValue;
+              } 
+                else {
+                  errorLogEl.innerHTML = "";
+                  let errorLogMessage = "test";
+                  document.getElementById("errorLogEl").innerHTML = errorLogMessage;
+                }
+                
+              }
           
         </script>
         
