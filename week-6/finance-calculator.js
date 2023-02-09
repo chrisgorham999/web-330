@@ -16,7 +16,7 @@ export class FinanceCalculator {
         let interestRate = 1 + rate/100;
         let presentValue = monthlyPayment * month;
         let futureValue = presentValue * (Math.pow(interestRate, month));
-        return futureValue.toPrecision(3)
+        return futureValue.toPrecision(15);
     }
 
     static convertToCurrency(field) {
