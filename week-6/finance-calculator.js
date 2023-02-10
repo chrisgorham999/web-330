@@ -11,6 +11,7 @@
 
 export class FinanceCalculator {
     static MONTHS_IN_YEAR = 12;
+    // function to calculate the future value
     static calculateFutureValue(monthlyPayment, rate, years) {
         let month = years * this.MONTHS_IN_YEAR;
         let interestRate = 1 + rate/100;
@@ -18,7 +19,7 @@ export class FinanceCalculator {
         let futureValue = presentValue * (Math.pow(interestRate, month));
         return futureValue.toPrecision(15);
     }
-
+    // converts the future value (or any number inputted) to a currency for proper display
     static convertToCurrency(field) {
         let currencyFormatter = new Intl.NumberFormat("en-US", {
             style: "currency",

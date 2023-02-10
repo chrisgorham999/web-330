@@ -16,6 +16,7 @@ export class FloatMinField {
         this.min = min;
     }
 
+    // validates if the number entered is higher than the min
     validate() {
         if (parseFloat(this.field) > this.min) {
             return true;
@@ -26,6 +27,7 @@ export class FloatMinField {
         }
     }
 
+    // error message
     getMessage() {
         return `${this.name} must be more than ${this.min}. You entered ${this.field}.`;
     }

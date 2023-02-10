@@ -16,6 +16,7 @@ export class FloatField {
         this.field = field;
     }
 
+    // validates if there is a number (or not) entered into each field
     validate() {
         if (!Number.isNaN(parseFloat(this.field))) {
             return true;
@@ -25,6 +26,7 @@ export class FloatField {
         }
     }
 
+    // error message 
     getMessage() {
         return `${this.name} must be a float value. You entered ${this.field}.`;
     }

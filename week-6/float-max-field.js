@@ -16,6 +16,7 @@ export class FloatMaxField {
         this.max = max;
     }
 
+    // validates if the number entered is higher than the max
     validate() {
         if (parseFloat(this.field) < this.max) {
             return true;
@@ -26,6 +27,7 @@ export class FloatMaxField {
         }
     }
     
+    // error message
     getMessage() {
         return `${this.name} must be less than ${this.max}. You entered ${this.field}.`;
     }

@@ -16,6 +16,7 @@ import { FloatMaxField } from "./float-max-field.js";
 
 
 export class Validator {
+    // establishes the validators and messages arrays - empty to start
     validators = [];
     messages = [];
 
@@ -40,6 +41,7 @@ export class Validator {
         this.validators.push(new FloatMaxField(this.name, this.field, max));
     }
 
+    // validates each individual validator function and pushes error message to messages
     validate() {
         for (let i of this.validators) {
             if (i.validate() === false) {

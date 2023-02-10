@@ -51,7 +51,8 @@
                 <div class="card-content">
                   <div class="form">
                       <div class="form-field">
-                
+                        
+                        <!--Div for the error log messages-->
                         <div class="col-12 danger" id="errorLog"><br></div>
 
                         <div class="row">
@@ -179,27 +180,35 @@
             // populate the span tag "date" with today's date
             document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
 
+            // onClick action for the Calculate button
             document.getElementById("btnCalculator").onclick = function() {
+              // establish variables for the three user inputs
               let monthlyPayment = document.getElementById("txtMonthlyPayment").value;
               let rate = document.getElementById("txtYearlyRate").value;
               let years = document.getElementById("listNumOfYears").value;
 
               let errorLogEl = document.getElementById("errorLog");
 
+              // make a new Validator object for the monthly payment input
               let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
 
+              // run the functions for our new Validator object
               monthlyPaymentValidator.addRequiredField();
               monthlyPaymentValidator.addRequiredFloatField();
               monthlyPaymentValidator.addFloatMinField(100);
 
+              // make a new Validator object for the interest rate input
               let rateValidator = new Validator("Interest Rate", rate);
 
+              // run the functions for our new Validator object
               rateValidator.addRequiredField();
               rateValidator.addRequiredFloatField();
               rateValidator.addFloatMaxField(100);
 
+              // define variable for the error log and set it to empty to start
               let errorLog = [];
 
+              // add monthly payment error messages to errorLog if they don't validate
               if (!monthlyPaymentValidator.validate()) {
                 for (let message of monthlyPaymentValidator.messages)
                 {
@@ -207,6 +216,7 @@
                 }
               }
 
+              // add interest rate error messages to errorLog if they don't validate
               if (!rateValidator.validate()) {
                 for (let message of rateValidator.messages)
                 {
@@ -214,12 +224,16 @@
                 }
               }
 
+              // if statement to either do the calculation (if validation is true) or to display error messages (if validation is false)
               if (monthlyPaymentValidator.validate() && rateValidator.validate() === true) {
+                // reset the error Log display
                 errorLogEl.innerHTML = "";
                 let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+                // prints the future value to the results div and converts it to a currency
                 document.getElementById("futureValue").innerHTML = "The future value is " + FinanceCalculator.convertToCurrency(futureValue);
               } 
                 else {
+                  // reset the error Log display
                   errorLogEl.innerHTML = "";                
                   let errorLogMessage = `<ul>`;
                   for (let message of errorLog) {

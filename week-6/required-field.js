@@ -15,6 +15,7 @@ export class RequiredField {
         this.field = field;
     }
 
+    // validates that fields have an input
     validate() {
         if (this.field !== "") {
             return true;
@@ -24,6 +25,7 @@ export class RequiredField {
         }
     }
 
+    // error message
     getMessage() {
         return `${this.name} is a required field.`;
     }
