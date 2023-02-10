@@ -56,30 +56,30 @@
 
                         <div class="row">
 
-                            <label class="col-5 form-field form-label" for="txtMonthlyPayment">Monthly Payment:</label>
-                            <input type="text" class="form-field col-7" id="txtMonthlyPayment">
+                            <label class="col-7 form-field form-label" for="txtMonthlyPayment">Monthly Payment:</label>
+                            <input type="text" class="form-field col-5" id="txtMonthlyPayment">
                         
                         </div>
 
                         <div class="row">
 
-                          <label class="col-5 form-field form-label" for="txtYearlyRate">Interest Rate:</label>
-                          <input type="text" class="form-field col-7" id="txtYearlyRate">
-
-
-                        <div class="row">
-
-                          <i class="danger">Enter 11% as 11.1:</i>
+                          <label class="col-7 form-field form-label" for="txtYearlyRate">Interest Rate:</label>
+                          <input type="text" class="form-field col-5" id="txtYearlyRate">
 
                         </div>
+
+                        <div class="col-12">
+                          <i class="danger">Enter 11.1% as 11.1:</i><br>
+                        </div>
+
                           
 
-                        </div>
+                          
                   
                         <div class="row">
 
-                          <label class="col-5 form-field form-label" for="listNumOfYears">Number of Years:</label>
-                          <select name="listNumOfYears" id="listNumOfYears" class="drop-down-menu col-7">
+                          <label class="col-7 form-field form-label" for="listNumOfYears">Number of Years:</label>
+                          <select name="listNumOfYears" id="listNumOfYears" class="drop-down-menu col-5">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -221,11 +221,13 @@
               } 
                 else {
                   errorLogEl.innerHTML = "";
-                  let errorLogMessage = "test";
-                  document.getElementById("errorLogEl").innerHTML = errorLogMessage;
+                  let errorLogMessage = "";                  
+                  errorLogMessage += `<ul><li>${message.errorLog}</li>`
+                  errorLogEl.innerHTML = errorLogMessage;
+                  }
+                  
                 }
                 
-              }
           
         </script>
         

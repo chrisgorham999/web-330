@@ -17,7 +17,14 @@ export class FloatMaxField {
     }
 
     validate() {
+        let value = parseFloat(this.field)
+        if (value < this.max) {
+            return true
+        }
 
+        else {
+            return false
+        }
     }
     
     getMessage() {

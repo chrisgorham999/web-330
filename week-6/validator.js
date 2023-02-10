@@ -42,8 +42,8 @@ export class Validator {
 
     validate() {
         for (let i of this.validators) {
-            if (false) {
-                this.validators.push(getMessage(i));
+            if (i.validate() === false) {
+                this.messages.push(i.getMessage());
             }
         }
         return true;

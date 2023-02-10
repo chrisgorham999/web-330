@@ -17,7 +17,12 @@ export class FloatField {
     }
 
     validate() {
-
+        if (isNaN(this.field) === true) {
+            return false
+        }
+        else {
+            return true
+        }
     }
 
     getMessage() {
