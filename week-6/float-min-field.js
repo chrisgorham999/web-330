@@ -17,17 +17,16 @@ export class FloatMinField {
     }
 
     validate() {
-        let value = parseFloat(this.field);
-        if (value > this.min) {
-            return true
+        if (parseFloat(this.field) > this.min) {
+            return true;
         }
 
         else {
-            return false
+            return false;
         }
     }
 
     getMessage() {
-        return "<name> must be more than <min>. You entered <field>"
+        return `${this.name} must be more than ${this.min}. You entered ${this.field}.`;
     }
 }

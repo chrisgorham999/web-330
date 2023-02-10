@@ -17,15 +17,15 @@ export class FloatField {
     }
 
     validate() {
-        if (isNaN(this.field) === true) {
-            return false
+        if (!Number.isNaN(parseFloat(this.field))) {
+            return true;
         }
         else {
-            return true
+            return false;
         }
     }
 
     getMessage() {
-        return "<name> must be a float value. You entered <field>"
+        return `${this.name} must be a float value. You entered ${this.field}.`;
     }
 }

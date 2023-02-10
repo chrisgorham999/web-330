@@ -52,19 +52,19 @@
                   <div class="form">
                       <div class="form-field">
                 
-                        <div class="row col-12 danger" id="errorLog"></div>
+                        <div class="col-12 danger" id="errorLog"><br></div>
 
                         <div class="row">
 
-                            <label class="col-7 form-field form-label" for="txtMonthlyPayment">Monthly Payment:</label>
-                            <input type="text" class="form-field col-5" id="txtMonthlyPayment">
+                            <label class="col-5 form-field form-label" for="txtMonthlyPayment">Monthly Payment:</label>
+                            <input type="text" class="form-field col-7" id="txtMonthlyPayment">
                         
                         </div>
 
                         <div class="row">
 
-                          <label class="col-7 form-field form-label" for="txtYearlyRate">Interest Rate:</label>
-                          <input type="text" class="form-field col-5" id="txtYearlyRate">
+                          <label class="col-5 form-field form-label" for="txtYearlyRate">Interest Rate:</label>
+                          <input type="text" class="form-field col-7" id="txtYearlyRate">
 
                         </div>
 
@@ -78,8 +78,8 @@
                   
                         <div class="row">
 
-                          <label class="col-7 form-field form-label" for="listNumOfYears">Number of Years:</label>
-                          <select name="listNumOfYears" id="listNumOfYears" class="drop-down-menu col-5">
+                          <label class="col-5 form-field form-label" for="listNumOfYears">Number of Years:</label>
+                          <select name="listNumOfYears" id="listNumOfYears" class="drop-down-menu col-7">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -188,42 +188,45 @@
 
               let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
 
-              monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator);
-              monthlyPaymentValidator.addRequiredFloatField(monthlyPaymentValidator);
-              monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator, 100);
+              monthlyPaymentValidator.addRequiredField();
+              monthlyPaymentValidator.addRequiredFloatField();
+              monthlyPaymentValidator.addFloatMinField(100);
 
               let rateValidator = new Validator("Interest Rate", rate);
 
-              rateValidator.addRequiredField(rateValidator);
-              rateValidator.addRequiredFloatField(rateValidator);
-              rateValidator.addFloatMaxField(rateValidator, 100);
+              rateValidator.addRequiredField();
+              rateValidator.addRequiredFloatField();
+              rateValidator.addFloatMaxField(100);
 
               let errorLog = [];
 
               if (!monthlyPaymentValidator.validate()) {
-                for (let msg of monthlyPaymentValidator.messages)
+                for (let message of monthlyPaymentValidator.messages)
                 {
-                  errorLog.push(msg);
+                  errorLog.push(message);
                 }
               }
 
               if (!rateValidator.validate()) {
-                for (let msg of rateValidator.messages)
+                for (let message of rateValidator.messages)
                 {
-                  errorLog.push(msg);
+                  errorLog.push(message);
                 }
               }
 
-              if (monthlyPaymentValidator.validate() & rateValidator.validate() === true) {
+              if (monthlyPaymentValidator.validate() && rateValidator.validate() === true) {
                 errorLogEl.innerHTML = "";
                 let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
                 document.getElementById("futureValue").innerHTML = "The future value is " + FinanceCalculator.convertToCurrency(futureValue);
               } 
                 else {
-                  errorLogEl.innerHTML = "";
-                  let errorLogMessage = "";                  
-                  errorLogMessage += `<ul><li>${message.errorLog}</li>`
-                  errorLogEl.innerHTML = errorLogMessage;
+                  errorLogEl.innerHTML = "";                
+                  let errorLogMessage = `<ul>`;
+                  for (let message of errorLog) {
+                    errorLogMessage += `<li>${message}</li>`;
+                  }
+                  errorLogMessage += `</ul>`;
+                  document.getElementById("errorLog").innerHTML = errorLogMessage;
                   }
                   
                 }

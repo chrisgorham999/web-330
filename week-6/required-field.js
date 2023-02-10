@@ -16,10 +16,15 @@ export class RequiredField {
     }
 
     validate() {
-        return Boolean(this.field)
+        if (this.field !== "") {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     getMessage() {
-        return "<name> is a required field"
+        return `${this.name} is a required field.`;
     }
 }

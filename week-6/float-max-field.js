@@ -17,17 +17,16 @@ export class FloatMaxField {
     }
 
     validate() {
-        let value = parseFloat(this.field)
-        if (value < this.max) {
-            return true
+        if (parseFloat(this.field) < this.max) {
+            return true;
         }
 
         else {
-            return false
+            return false;
         }
     }
     
     getMessage() {
-        return "<name> must be less than <max>. You entered <field>"
+        return `${this.name} must be less than ${this.max}. You entered ${this.field}.`;
     }
 }
