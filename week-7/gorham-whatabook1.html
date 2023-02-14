@@ -9,6 +9,7 @@
 ; Web 330 HTML, CSS, and JavaScript Requirements Word Document
 ; MDN Web Docs DOMContentLoaded event, URL: https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
 ; MDN Web Docs DOMParser.parseFromString(), URL: https://developer.mozilla.org/en-US/docs/Web/API/DOMParser/parseFromString
+; W3 Schools HTML DOM Document querySelectorAll(), URL: https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 =====================================
 -->
 
@@ -57,7 +58,7 @@
             </div>
         </div>
 
-        <!-- return home link !-->
+        <!-- return home link-->
         <div class="assign-content">
                 <a href="../index.html">Return</a>
         </div>
@@ -120,18 +121,19 @@
 
             "use-strict";
 
-            addEventListener('DOMContentLoaded', (event) => {
+            addEventListener('DOMContentLoaded', () => {
               
             let fileName = "books.xml";
 
             fetch(fileName)
             .then(res => res.text())
             .then(data => {
-              let domParser = new DOMParser;
-              let xmlBooks = domParser.parseFromString(domParser, "text/xml");
+              let domParser = new DOMParser();
+              let xmlBooks = domParser.parseFromString(data, "text/xml");
               loadBooks(xmlBooks);
               addIsbnClickEvents();
-            })});
+                });
+             });
 
             function loadBooks(xml) {
               let books = xml.getElementsByTagName("book");
@@ -145,7 +147,7 @@
                   let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
                   let authors = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
 
-                  tableData += `<tr><td data-value="ISBN"><a href="#" class="isbn-link">${isbn}</a></td><td data-value="Title">${title}</td><td data-value="Description">${description}</td><td data-value="Pages">${pages}</td><td data-value="Authors">${authors}</td></tr>`;
+                  tableData += `<tr><td data-value="ISBN"><a href="#" id="isbn-link">${isbn}</a></td><td data-value="Title">${title}</td><td data-value="Description">${description}</td><td data-value="Pages">${pages}</td><td data-value="Authors">${authors}</td></tr>`;
                 }
 
                 tableData += `</table>`
@@ -153,6 +155,7 @@
             }
 
             function anchorClicked(e) {
+
               e.preventDefault();
 
               let self = this;
@@ -161,23 +164,23 @@
 
               let data = row.querySelectorAll("td");
 
-              let bookData = `<ul style="list-style-type:none">`;
+              let bookData = `<ul><li>test</li>`;
 
               for (let field of data)
                 {
-                  bookData += `<li><b>${field.dataset.value}: ${isbn}<br>
-                               <li><b>${field.dataset.value}: ${title}<br>`
+                  bookData += `<li><b>${field.dataset.value}:`;
                 }
                   
                 document.getElementById("selectedBook").innerHTML = bookData;   
             }
                 
           function addIsbnClickEvents() {
-            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
-
-              for (let buttons of viewButtons) {
+            let viewButtons = document.querySelectorAll("#bookTable .isbn-link");
+                for (let i = 0; i < viewButtons.length; i++) {
                   viewButtons[index].addEventListener("click", anchorClicked);
-              }
+                }
+
+              console.log(viewButtons);
           }  
           
         </script>
