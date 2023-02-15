@@ -152,7 +152,7 @@
                   let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
                   let authors = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
 
-                  tableData += `<tr><td data-value="ISBN"><a href="#" class="isbn-link">${isbn}</a></td><td data-value="Title">${title}</td><td data-value="Description">${description}</td><td data-value="Pages">${pages}</td><td data-value="Authors">${authors}</td></>`;
+                  tableData += `<tr><td data-value="ISBN" data-entry="${isbn}"><a href="#" class="isbn-link">${isbn}</a></td><td data-value="Title" data-entry="${title}">${title}</td><td data-value="Description" data-entry="${description}">${description}</td><td data-value="Pages" data-entry="${pages}">${pages}</td><td data-value="Authors" data-entry="${authors}">${authors}</td></>`;
                 }
 
                 tableData += `</tbody></table>`
@@ -168,15 +168,18 @@
               let cell = self.parentElement;
               let row = cell.parentElement;
 
+              // pulls all data from the table TDs in each row
               let data = row.querySelectorAll("td");
 
-              let bookData = `<ul>`;
-
+              // begin the string for the Selected Book
+              let bookData = `<ul style="list-style-type:none">`;
+              
+              // iterates over data and returns the data-value and data-entry fields
               for (let field of data)
                 {
-                  bookData += `<li><b>${field.dataset.value}: </b> ${field.dataset}`;
+                  bookData += `<li><b>${field.dataset.value}: </b>${field.dataset.entry}`;
                 }    
-                  
+                // posts the bookData to the Selected Book div
                 document.getElementById("selectedBook").innerHTML = bookData;   
             }
           
@@ -186,8 +189,6 @@
                 for (let index = 0; index < viewButtons.length; index++) {
                   viewButtons[index].addEventListener("click", anchorClicked);
                 }
-
-              console.log(viewButtons);
           }  
           
         </script>
