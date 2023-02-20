@@ -1,0 +1,197 @@
+<!-- 
+======================================
+; Title: Assignment 8.2 - WhatABook, Part 2
+; Author: Professor Krasso
+; Date: 20 Feb 2023
+; Modified By: Chris Gorham
+; Description: This code is for the WhatABook Part 2 App HTML & JavaScript
+; Sources Used: 
+; Web 330 HTML, CSS, and JavaScript Requirements Word Document
+=====================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+        <meta charset="UTF-8">
+        <title>WEB 330 - Enterprise JavaScript II</title>
+
+
+        <link rel="stylesheet" type="text/css" href="../theme.css">
+        <link rel="stylesheet" type="text/css" href="../site.css">
+        <link rel="stylesheet" type="text/css" href="gorham-whatabook2.css">
+
+        <!-- Google Font Set (Oswald) for WEB 330-->
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+        <!--- Font Awesome CDN-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!---The JavaScript source doe for the theme functions setDefaultTheme and setSelectedTheme-->
+        <script src="../theme.js"></script>
+
+</head>
+
+
+<body class="light-theme">
+            <!-- Creates the icon and adds the onclick functionality for changing between themes-->
+            <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right" style="font-size: 28px;"><span id="icon-text"></span></i><br>
+
+    <div id="assign-container">
+
+        <h1 class="app-header">Welcome to the WhatABook, Part 2 App!</h1>
+
+        <div class="assign-content">
+            <div class="card">
+                <div class="card-title">Book Listing</div>
+                
+                <div class="card-content" id="bookList">
+
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- return home link-->
+        <div class="assign-content">
+                <a href="../index.html">Return</a>
+        </div>
+                
+                
+
+        <!-- Results Card-->
+        <div class="assign-content">
+            <div class="card">
+                <div class="card-title">Selected Book</div>
+                <div class="card-content" id="selectedBook">
+
+                </div>
+            </div>
+        </div>    
+
+
+
+
+    
+
+        <script>
+        
+        "use-strict";
+
+        // sets a default theme; this code needs to be first
+        setDefaultTheme();
+    
+        // the function which will toggle between the two different themes
+        function toggleMode(x) {
+          let colorTheme = document.body.classList; // establishes the variable that holds the body CSS class
+          let iconMode = x.classList; // gets the classes 
+
+          // if the value shows light, update the preference in storage
+          if (colorTheme.value === "light-theme")
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "dark-theme");
+            localStorage.setItem("iconMode", "fa-toggle-on");
+            localStorage.setItem("iconText", "Dark Mode");
+          }
+        
+          else
+          {
+            localStorage.clear();
+            localStorage.setItem("mode", "light-theme");
+            localStorage.setItem("iconMode", "fa-toggle-off");
+            localStorage.setItem("iconText", "Light Mode");
+          }
+
+          // applies the updated theme selection
+          colorTheme.value = localStorage.getItem("mode");
+          iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+          document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
+        }
+
+        </script>
+
+        <script type="module">
+
+            "use-strict";
+
+            // event listener for DOM content, runs after scripts load
+            addEventListener('DOMContentLoaded', () => {
+            
+            // setup a variable for the xml file for our fetch command
+            let fileName = "books.xml";
+            
+            // fetch the xml file and parse it
+            fetch(fileName)
+            .then(res => res.text())
+            .then(data => {
+              let domParser = new DOMParser();
+              let xmlBooks = domParser.parseFromString(data, "text/xml");
+              loadBooks(xmlBooks);
+              // triggers the event listeners for the isbn links
+              addIsbnClickEvents();
+                });
+             });
+
+            // populates a table with the data from books.xml
+            function loadBooks(xml) {
+              let books = xml.getElementsByTagName("book");
+              let tableData = `<table id="bookTable" class="table"><th>ISBN</th><th>Title</th><th>Description</th><th>Pages</th><th>Authors</th><tbody>`;
+
+                for (let book of books)
+                {
+                  let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
+                  let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                  let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
+                  let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
+                  let authors = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+
+                  tableData += `<tr><td data-value="ISBN" data-entry="${isbn}"><a href="#" class="isbn-link">${isbn}</a></td><td data-value="Title" data-entry="${title}">${title}</td><td data-value="Description" data-entry="${description}">${description}</td><td data-value="Pages" data-entry="${pages}">${pages}</td><td data-value="Authors" data-entry="${authors}">${authors}</td></>`;
+                }
+
+                tableData += `</tbody></table>`
+                document.getElementById("bookList").innerHTML = tableData;
+            }
+
+            // controls what happens when an ISBN link is clicked
+            function anchorClicked(e) {
+
+              e.preventDefault();
+
+              let self = this;
+              let cell = self.parentElement;
+              let row = cell.parentElement;
+
+              // pulls all data from the table TDs in each row
+              let data = row.querySelectorAll("td");
+
+              // begin the string for the Selected Book
+              let bookData = `<ul style="list-style-type:none">`;
+              
+              // iterates over data and returns the data-value and data-entry fields
+              for (let field of data)
+                {
+                  bookData += `<li><b>${field.dataset.value}: </b>${field.dataset.entry}`;
+                }    
+                // posts the bookData to the Selected Book div
+                document.getElementById("selectedBook").innerHTML = bookData;   
+            }
+          
+          // event listeners for the isbn link clicks
+          function addIsbnClickEvents() {
+            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+                for (let index = 0; index < viewButtons.length; index++) {
+                  viewButtons[index].addEventListener("click", anchorClicked);
+                }
+          }  
+          
+        </script>
+        
+</body>
+
+
+</html>
