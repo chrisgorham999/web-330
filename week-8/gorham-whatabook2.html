@@ -7,6 +7,7 @@
 ; Description: This code is for the WhatABook Part 2 App HTML & JavaScript
 ; Sources Used: 
 ; Web 330 HTML, CSS, and JavaScript Requirements Word Document
+; JSON error resolution, URL: https://www.telerik.com/blogs/what-is-json-how-to-handle-unexpected-token-error
 =====================================
 -->
 
@@ -116,80 +117,120 @@
         </script>
 
         <script type="module">
+        "use strict";
+        
+        // imports the HTTP Client class
+        import { HttpClient } from "./http-client.js";
+        
+        //create a new HTTP Client and assigns it to a variable
+        let http = new HttpClient();
+        
+        // put the isbns that will be used into a variable
+        const isbns = [
+        '0345339681',
+        '0261103571',
+        '9780593099322',
+        '9780261102361',
+        '9780261102378',
+        '9780590302715',
+        '9780316769532',
+        '9780743273565',
+        '9780590405959',
+        ];
 
-            "use-strict";
+      // defines connection parameters
+       const params = {
+      "bibkeys": `ISBN: ${isbns.join(",")}`,
+      "format": "json",
+      "jscmd": "details"
+      };
 
-            // event listener for DOM content, runs after scripts load
-            addEventListener('DOMContentLoaded', () => {
-            
-            // setup a variable for the xml file for our fetch command
-            let fileName = "books.xml";
-            
-            // fetch the xml file and parse it
-            fetch(fileName)
-            .then(res => res.text())
-            .then(data => {
-              let domParser = new DOMParser();
-              let xmlBooks = domParser.parseFromString(data, "text/xml");
-              loadBooks(xmlBooks);
-              // triggers the event listeners for the isbn links
-              addIsbnClickEvents();
-                });
-             });
+      // establish a null value for our test Res
+      let testRes = null;
 
-            // populates a table with the data from books.xml
-            function loadBooks(xml) {
-              let books = xml.getElementsByTagName("book");
-              let tableData = `<table id="bookTable" class="table"><th>ISBN</th><th>Title</th><th>Description</th><th>Pages</th><th>Authors</th><tbody>`;
+      // establish our books table with an http get and binding it to the bookList div
+      http.get("https://openlibrary.org/api/books", params).then(res => {
+      console.log(res);
+      testRes = res;
+      document.getElementById("bookList").innerHTML = buildHtmlString(res, "table");
+      addIsbnClickEvents();
+      })
+      .catch(e => {
+          console.log(e);
+      })
 
-                for (let book of books)
-                {
-                  let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
-                  let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
-                  let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
-                  let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
-                  let authors = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+      // the getbook function which retrieves the book data from the API
+      function getBook(e) {
+        e.preventDefault();
+        let self = this;
+        let isbn = self.innerText;
+        let newParam = {};
+        newParam[isbn] = testRes[isbn];
+        document.getElementById("selectedBook").innerHTML = buildHtmlString(newParam, "ul");
+      }
 
-                  tableData += `<tr><td data-value="ISBN" data-entry="${isbn}"><a href="#" class="isbn-link">${isbn}</a></td><td data-value="Title" data-entry="${title}">${title}</td><td data-value="Description" data-entry="${description}">${description}</td><td data-value="Pages" data-entry="${pages}">${pages}</td><td data-value="Authors" data-entry="${authors}">${authors}</td></>`;
-                }
+      // builds our html string for the table
+      function buildHtmlString(res, format) {
+        let tableString =
+          `<table id="bookTable" class="table">  
+          <thead><tr><th>ISBN</th><th>Title</th><th>Description</th><th>Pages</th><th>Authors</th></tr></thead><tbody>`;
 
-                tableData += `</tbody></table>`
-                document.getElementById("bookList").innerHTML = tableData;
+        let ulString = "";
+
+        for (let key in res) {
+          // build the beginning portion of the list string
+          ulString += `<ul style = "list-style-type: none;">`;
+
+          // add the authors and book data to the list string
+          if (res.hasOwnProperty(key)) {
+              let authors = [];
+              if (res[key].details.authors) {
+                  authors = res[key].details.authors.map(function (author) {
+                      return author.name;
+                  })
+              }
+              let book = {
+                  isbn: res[key].details.isbn_11 || res[key].details.isbn_13 || res[key].details.isbn_10,
+                  title: res[key].details.title,
+                  description: res[key].details.subtitle || res[key].details.subtitle || "N/A",
+                  pages: res[key].details.number_of_pages || res[key].details.number_of_pages || "N/A",
+                  authors: authors ? authors.join(",") : ""
+              }
+              // update the list string with the book data
+              ulString += `<li><b>ISBN:</b> ${book.isbn} </li>
+                               <li><b>Title:</b> ${book.title} </li>
+                               <li><b>Description:</b> ${book.description} </li>
+                               <li><b>Pages:</b> ${book.pages} </li>
+                               <li><b>Authors:</b> ${book.authors} </li>`;
+              // update the table string with the book data
+              tableString += `<tr><td><a href= "#" class = "isbn-link"> ${book.isbn}</a></td>
+                                      <td>${book.title}</td><td>${book.description}</td>
+                                      <td>${book.pages}</td><td>${book.authors}</td>
+                                  </tr>`;
+
+
+                  }
+              }
+              // close out the table
+              tableString += `</tbody></table>`;
+              // if statement to make sure the format is correct
+              if (format === "table") {
+              return tableString
+              } else {
+              return ulString
+              }
             }
 
-            // controls what happens when an ISBN link is clicked
-            function anchorClicked(e) {
-
-              e.preventDefault();
-
-              let self = this;
-              let cell = self.parentElement;
-              let row = cell.parentElement;
-
-              // pulls all data from the table TDs in each row
-              let data = row.querySelectorAll("td");
-
-              // begin the string for the Selected Book
-              let bookData = `<ul style="list-style-type:none">`;
-              
-              // iterates over data and returns the data-value and data-entry fields
-              for (let field of data)
-                {
-                  bookData += `<li><b>${field.dataset.value}: </b>${field.dataset.entry}`;
-                }    
-                // posts the bookData to the Selected Book div
-                document.getElementById("selectedBook").innerHTML = bookData;   
+            //defining the click event function from last week that acts when an ISBN link is clicked
+            function addIsbnClickEvents() {
+              let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+              for (let index = 0; index < viewButtons.length; index++) {
+              viewButtons[index].addEventListener("click", getBook);
+              }
             }
-          
-          // event listeners for the isbn link clicks
-          function addIsbnClickEvents() {
-            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
-                for (let index = 0; index < viewButtons.length; index++) {
-                  viewButtons[index].addEventListener("click", anchorClicked);
-                }
-          }  
-          
-        </script>
+
+</script>
+
         
 </body>
 

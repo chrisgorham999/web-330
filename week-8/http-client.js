@@ -9,6 +9,19 @@
 ;=====================================
 */
 
+"use-strict";
+
+// creating and exporting the http client class
 export class HttpClient {
+    async get(url, params="") {
+        // create a new URL with a different name that can be referenced
+        let urlTest = new URL(url);
+
+        urlTest.search = new URLSearchParams(params);
+
+        const res = await fetch(urlTest.toString(), {method: "GET"});
+        return res.json();
+    }
+
 
 }
