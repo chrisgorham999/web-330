@@ -126,7 +126,7 @@
         let http = new HttpClient();
         
         // put the isbns that will be used into a variable
-        const isbns = [
+        const isbn = [
         '0345339681',
         '0261103571',
         '9780593099322',
@@ -139,19 +139,15 @@
         ];
 
       // defines connection parameters
-       const params = {
-      "bibkeys": `ISBN: ${isbns.join(",")}`,
+       let params = {
+      "bibkeys": `ISBN: ${isbn.join(",")}`,
       "format": "json",
       "jscmd": "details"
       };
 
-      // establish a null value for our test Res
-      let testRes = null;
-
       // establish our books table with an http get and binding it to the bookList div
       http.get("https://openlibrary.org/api/books", params).then(res => {
       console.log(res);
-      testRes = res;
       document.getElementById("bookList").innerHTML = buildHtmlString(res, "table");
       addIsbnClickEvents();
       })
@@ -164,9 +160,18 @@
         e.preventDefault();
         let self = this;
         let isbn = self.innerText;
-        let newParam = {};
-        newParam[isbn] = testRes[isbn];
-        document.getElementById("selectedBook").innerHTML = buildHtmlString(newParam, "ul");
+        let params = {
+        "bibkeys": `ISBN:${isbn}`,
+        "format": "json",
+        "jscmd": "details"
+        }
+        http.get("https://openlibrary.org/api/books", params)
+        .then(res => {
+        document.getElementById('selectedBook').innerHTML = buildHtmlString(res, "ul");
+        })
+        .catch(error => {
+          console.log(error);
+        }); 
       }
 
       // builds our html string for the table
