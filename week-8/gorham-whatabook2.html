@@ -159,7 +159,7 @@
           console.log(e);
       })
 
-      // the getbook function which retrieves the book data from the API
+      // the getbook function which retrieves the book data from the API and triggers the build html string for a list
       function getBook(e) {
         e.preventDefault();
         let self = this;
@@ -181,7 +181,7 @@
           // build the beginning portion of the list string
           ulString += `<ul style = "list-style-type: none;">`;
 
-          // add the authors and book data to the list string
+          // add the authors and book data 
           if (res.hasOwnProperty(key)) {
               let authors = [];
               if (res[key].details.authors) {
@@ -213,7 +213,7 @@
               }
               // close out the table
               tableString += `</tbody></table>`;
-              // if statement to make sure the format is correct
+              // if statement to make sure the format is correct ("ul or table")
               if (format === "table") {
               return tableString
               } else {
